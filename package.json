@@ -1,0 +1,1 @@
+{ "name": "prospect-search", "version": "1.0.0", "main": "index.js", "scripts": { "start": "node backend/src/index.js" }, "dependencies": {}, "devDependencies": {} }

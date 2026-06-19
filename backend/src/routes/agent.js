@@ -12,10 +12,17 @@ const limiter = rateLimit({
 
 router.post('/chat', limiter, authMiddleware, async (req, res) => {
   try {
-    const { message, context = {} } = req.body || {};
+    const payload = req.body || {};
+    const context = payload.context || payload;
+    const message = payload.message || payload.request || [
+      payload.tipo_solicitacao,
+      payload.cliente,
+      payload.cnpj_cpf,
+      payload.periodo_referencia,
+    ].filter(Boolean).join(' - ');
 
-    if (!message || !String(message).trim()) {
-      return res.status(400).json({ error: 'message is required' });
+    if (!String(message || '').trim() && !payload.tipo_solicitacao && !payload.cnpj_cpf && !payload.cliente) {
+      return res.status(400).json({ error: 'message or structured intake data is required' });
     }
 
     const result = await fiscalAgent.chat({
@@ -29,9 +36,11 @@ router.post('/chat', limiter, authMiddleware, async (req, res) => {
       userMessage: String(message),
       assistantMessage: result.answer,
       metadata: {
-        cnpj: result.company?.cnpj || null,
-        regime: result.regime?.regime_estimado || null,
-        situacao: result.situacao?.status || null,
+        cnpj: result.inputs?.cnpj || result.company?.cnpj || null,
+        cpf: result.inputs?.cpf || null,
+        tema: result.classification?.topic || null,
+        status: result.status || null,
+        responsible: result.responsible || null,
       },
     });
 
@@ -44,18 +53,17 @@ router.post('/chat', limiter, authMiddleware, async (req, res) => {
 router.post('/analyze', limiter, authMiddleware, async (req, res) => {
   try {
     const payload = req.body || {};
-    const cnpjs = Array.isArray(payload.cnpjs)
-      ? payload.cnpjs
-      : payload.cnpj
-        ? [payload.cnpj]
-        : [];
+    const cnpjs = Array.isArray(payload.cnpjs) ? payload.cnpjs : [];
+    const cnpj = payload.cnpj ? [payload.cnpj] : [];
+    const cpf = payload.cpf ? [payload.cpf] : [];
+    const identifiers = [...cnpjs, ...cnpj, ...cpf];
 
-    if (!cnpjs.length) {
-      return res.status(400).json({ error: 'cnpj or cnpjs is required' });
+    if (!identifiers.length) {
+      return res.status(400).json({ error: 'cnpj, cpf or cnpjs is required' });
     }
 
     const result = await fiscalAgent.analyze({
-      cnpjs,
+      cnpjs: identifiers,
       user: req.user,
     });
 

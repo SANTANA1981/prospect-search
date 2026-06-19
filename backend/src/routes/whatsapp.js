@@ -96,16 +96,23 @@ router.get('/webhook', (req, res) => {
   const challenge = req.query['hub.challenge'];
   const mode = req.query['hub.mode'];
   const token = req.query['hub.verify_token'];
+  const safeChallenge = typeof challenge === 'string' && /^[A-Za-z0-9._-]+$/.test(challenge)
+    ? challenge
+    : null;
 
   if (verifyToken) {
     if (mode === 'subscribe' && token === verifyToken) {
-      return res.status(200).send(challenge || 'OK');
+      if (!safeChallenge) {
+        return res.status(400).type('text/plain').send('Invalid challenge');
+      }
+
+      return res.status(200).type('text/plain').send(safeChallenge);
     }
 
-    return res.status(403).send('Forbidden');
+    return res.status(403).type('text/plain').send('Forbidden');
   }
 
-  return res.status(200).send(challenge || 'OK');
+  return res.status(200).type('text/plain').send('OK');
 });
 
 router.post('/webhook', limiter, async (req, res) => {

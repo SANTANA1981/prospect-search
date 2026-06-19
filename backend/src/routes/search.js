@@ -2,9 +2,15 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/connection');
 const authMiddleware = require('../middleware/auth');
+const rateLimit = require('express-rate-limit');
+
+const limiter = rateLimit({
+  windowMs: Number(process.env.SEARCH_RATE_LIMIT_WINDOW_MS || 60_000),
+  max: Number(process.env.SEARCH_RATE_LIMIT_MAX || 30),
+});
 
 // Get all searches for user
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/', limiter, authMiddleware, async (req, res) => {
   if (!db.isConfigured) {
     return res.status(503).json({ error: 'Database not configured' });
   }
@@ -21,7 +27,7 @@ router.get('/', authMiddleware, async (req, res) => {
 });
 
 // Create new search
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', limiter, authMiddleware, async (req, res) => {
   if (!db.isConfigured) {
     return res.status(503).json({ error: 'Database not configured' });
   }
@@ -41,7 +47,7 @@ router.post('/', authMiddleware, async (req, res) => {
 });
 
 // Get search by ID
-router.get('/:id', authMiddleware, async (req, res) => {
+router.get('/:id', limiter, authMiddleware, async (req, res) => {
   if (!db.isConfigured) {
     return res.status(503).json({ error: 'Database not configured' });
   }
@@ -63,7 +69,7 @@ router.get('/:id', authMiddleware, async (req, res) => {
 });
 
 // Update search
-router.put('/:id', authMiddleware, async (req, res) => {
+router.put('/:id', limiter, authMiddleware, async (req, res) => {
   if (!db.isConfigured) {
     return res.status(503).json({ error: 'Database not configured' });
   }
@@ -87,7 +93,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
 });
 
 // Delete search
-router.delete('/:id', authMiddleware, async (req, res) => {
+router.delete('/:id', limiter, authMiddleware, async (req, res) => {
   if (!db.isConfigured) {
     return res.status(503).json({ error: 'Database not configured' });
   }

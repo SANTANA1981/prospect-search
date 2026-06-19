@@ -1,19 +1,16 @@
 const express = require('express');
 const authMiddleware = require('../middleware/auth');
-const createRateLimit = require('../middleware/rateLimit');
+const rateLimit = require('express-rate-limit');
 const db = require('../db/connection');
 const fiscalAgent = require('../agents/fiscal-agent');
 
 const router = express.Router();
-const limiter = createRateLimit({
+const limiter = rateLimit({
   windowMs: Number(process.env.FISCAL_AGENT_RATE_LIMIT_WINDOW_MS || 60_000),
   max: Number(process.env.FISCAL_AGENT_RATE_LIMIT_MAX || 20),
 });
 
-router.use(authMiddleware);
-router.use(limiter);
-
-router.post('/chat', async (req, res) => {
+router.post('/chat', limiter, authMiddleware, async (req, res) => {
   try {
     const { message, context = {} } = req.body || {};
 
@@ -44,7 +41,7 @@ router.post('/chat', async (req, res) => {
   }
 });
 
-router.post('/analyze', async (req, res) => {
+router.post('/analyze', limiter, authMiddleware, async (req, res) => {
   try {
     const payload = req.body || {};
     const cnpjs = Array.isArray(payload.cnpjs)
@@ -68,7 +65,7 @@ router.post('/analyze', async (req, res) => {
   }
 });
 
-router.get('/history', async (req, res) => {
+router.get('/history', limiter, authMiddleware, async (req, res) => {
   if (!db.isConfigured) {
     return res.json({
       conversations: [],

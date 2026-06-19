@@ -11,7 +11,7 @@ const app = express();
 app.use(helmet());
 app.use(morgan('combined'));
 app.use(cors({
-  origin: process.env.FRONTEND_URL || true,
+  origin: process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : false,
   credentials: true,
 }));
 app.use(express.json({ limit: '1mb' }));

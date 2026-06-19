@@ -1,9 +1,14 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit');
 
 const router = express.Router();
+const limiter = rateLimit({
+  windowMs: Number(process.env.AUTH_RATE_LIMIT_WINDOW_MS || 60_000),
+  max: Number(process.env.AUTH_RATE_LIMIT_MAX || 20),
+});
 
-router.post('/token', (req, res) => {
+router.post('/token', limiter, (req, res) => {
   const { id, email, name, role = 'user' } = req.body || {};
 
   if (!id && !email) {
@@ -21,7 +26,7 @@ router.post('/token', (req, res) => {
   });
 });
 
-router.get('/me', (req, res) => {
+router.get('/me', limiter, (req, res) => {
   const header = req.headers.authorization || '';
   const token = header.startsWith('Bearer ') ? header.slice(7) : null;
 

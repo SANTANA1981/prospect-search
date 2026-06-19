@@ -1,10 +1,15 @@
 const express = require('express');
 const authMiddleware = require('../middleware/auth');
 const db = require('../db/connection');
+const rateLimit = require('express-rate-limit');
 
 const router = express.Router();
+const limiter = rateLimit({
+  windowMs: Number(process.env.DASHBOARD_RATE_LIMIT_WINDOW_MS || 60_000),
+  max: Number(process.env.DASHBOARD_RATE_LIMIT_MAX || 30),
+});
 
-router.get('/summary', authMiddleware, async (req, res) => {
+router.get('/summary', limiter, authMiddleware, async (req, res) => {
   if (!db.isConfigured) {
     return res.json({
       searches: 0,

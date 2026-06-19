@@ -175,64 +175,95 @@ Ao analisar uma nota, o agente deve responder:
 
 ---
 
-# 9) Matriz de CFOP por segmento
+# 9) Matriz técnica ampliada de CFOP por segmento
 
-## 9.1 Comércio
-> Regra-base: o XML normalmente traz CFOP de saída 5.xxx (interna), 6.xxx (interestadual) ou 7.xxx (exterior).  
-> Na entrada, o CFOP deve ser ajustado para 1.xxx, 2.xxx ou 3.xxx conforme a origem.
+## 9.1 Critério técnico de leitura
+> O CFOP do XML indica a natureza fiscal da **saída do emitente**.  
+> Na escrituração da entrada, o CFOP deve refletir a **natureza da entrada no destinatário**, a **UF**, a **finalidade da mercadoria/serviço** e o **efeito tributário**.
 
-| Operação no XML | CFOP escriturado na entrada | Exemplo prático |
-|---|---:|---|
-| Compra para revenda dentro do estado | 1.102 | Mercadoria adquirida para revenda |
-| Compra para revenda interestadual | 2.102 | Compra de fornecedor de outro estado |
-| Mercadoria sujeita à ST | 1.405 / 2.405 | Produto com substituição tributária |
-| Mercadoria com ST já retida | 1.403 / 2.403 | Revenda com ST encerrada na cadeia |
-| Devolução de mercadoria adquirida de terceiros | 1.201 / 2.201 | Devolução de compra para revenda |
-| Remessa em consignação | 1.917 / 2.917 | Mercadoria enviada para venda futura |
-| Retorno de consignação | 1.918 / 2.918 | Mercadoria não vendida retorna |
-| Transferência entre filiais | 1.151 / 2.151 | Filial para filial |
-| Faturamento antecipado | 1.922 / 2.922 | Venda antes da entrega física |
-| Outras entradas correlatas | 1.949 / 2.949 | Quando não houver CFOP específico mais adequado |
+### Origem do CFOP na entrada
+- **1.xxx** = entrada interna
+- **2.xxx** = entrada interestadual
+- **3.xxx** = entrada do exterior
 
-## 9.2 Indústria
-> Regra-base: a entrada deve refletir industrialização, insumo, ativo, uso/consumo, retorno ou remessa especial.
+### Regras de validação obrigatórias
+- CFOP do XML
+- CST / CSOSN
+- UF de origem e destino
+- finalidade da operação
+- incidência de ST, DIFAL, retenção ou benefício
+- direito a crédito de ICMS, PIS e COFINS
 
-| Operação no XML | CFOP escriturado na entrada | Exemplo prático |
-|---|---:|---|
-| Compra para industrialização dentro do estado | 1.101 | Matéria-prima |
-| Compra para industrialização interestadual | 2.101 | Insumo industrial vindo de outro estado |
-| Compra para revenda de item industrializado | 1.102 / 2.102 | Produto acabado comprado de terceiros |
-| Compra para uso ou consumo | 1.556 / 2.556 | Materiais de escritório ou limpeza |
-| Compra para ativo imobilizado | 1.551 / 2.551 | Máquina, equipamento, veículo |
-| Devolução de compra para industrialização | 1.202 / 2.202 | Insumo devolvido ao fornecedor |
-| Remessa para industrialização | 1.901 / 2.901 | Envio de insumo para terceiro industrializar |
-| Retorno de industrialização | 1.902 / 2.902 | Produto industrializado retorna |
-| Retorno de insumo não aplicado | 1.903 / 2.903 | Sobra de matéria-prima retorna |
-| Remessa para depósito / armazém geral | 1.905 / 2.905 | Envio para armazenagem |
-| Retorno de depósito | 1.906 / 2.906 | Mercadoria volta ao estabelecimento |
-| Remessa para conserto ou reparo | 1.915 / 2.915 | Equipamento para assistência técnica |
-| Retorno de conserto | 1.916 / 2.916 | Bem retorna após reparo |
-| Importação para industrialização | 3.101 | Insumo importado |
-| Importação para ativo | 3.551 | Máquina importada |
-| Importação para uso/consumo | 3.556 | Material de consumo importado |
+## 9.2 Comércio — CFOPs mais usuais
+> Segmento de maior incidência de revenda, ST, devolução e transferência.
 
-## 9.3 Prestação de serviços
-> Importante: **ISS puro não usa CFOP**. Para ISS, o correto é **código de serviço municipal / NFS-e**.  
-> CFOP aqui se aplica principalmente a **transporte**, **comunicação** e operações correlatas ao ICMS.
+| Operação no XML | CFOP mais comum na entrada | Faixa / variações usuais | Exemplo prático |
+|---|---:|---:|---|
+| Compra para revenda dentro do estado | 1.102 | 1.102 | Mercadoria adquirida para revenda |
+| Compra para revenda interestadual | 2.102 | 2.102 | Compra de fornecedor de outro estado |
+| Mercadoria sujeita à ST | 1.405 / 2.405 | 1.405 / 2.405 | Produto com substituição tributária |
+| Mercadoria com ST já retida | 1.403 / 2.403 | 1.403 / 2.403 | Revenda com ST encerrada na cadeia |
+| Devolução de mercadoria adquirida de terceiros | 1.201 / 2.201 | 1.201 / 2.201 | Devolução de compra para revenda |
+| Devolução de compra sujeita à ST | 1.202 / 2.202 | 1.202 / 2.202 | Insumo ou mercadoria devolvida com ST |
+| Remessa em consignação | 1.917 / 2.917 | 1.917 / 2.917 | Mercadoria enviada para venda futura |
+| Retorno de consignação | 1.918 / 2.918 | 1.918 / 2.918 | Mercadoria não vendida retorna |
+| Transferência entre filiais | 1.151 / 2.151 | 1.151 / 2.151 | Filial para filial |
+| Remessa para depósito fechado / armazém geral | 1.905 / 2.905 | 1.905 / 2.905 | Envio para armazenagem |
+| Retorno de depósito | 1.906 / 2.906 | 1.906 / 2.906 | Mercadoria volta ao estabelecimento |
+| Faturamento antecipado / entrega futura | 1.922 / 2.922 | 1.922 / 2.922 | Venda antes da entrega física |
+| Remessa para demonstração | 1.912 / 2.912 | 1.912 / 2.912 | Material para apresentação comercial |
+| Retorno de demonstração | 1.913 / 2.913 | 1.913 / 2.913 | Material retorna após demonstração |
+| Remessa para mostruário / exposição | 1.914 / 2.914 | 1.914 / 2.914 | Feiras e eventos |
+| Outras entradas correlatas | 1.949 / 2.949 | 1.949 / 2.949 | Quando não houver CFOP mais específico |
 
-| Operação no XML | CFOP escriturado na entrada | Exemplo prático |
-|---|---:|---|
-| Prestação de serviço de transporte interno | 1.351 a 1.359 | Frete rodoviário de carga dentro do estado |
-| Prestação de serviço de transporte interestadual | 2.351 a 2.359 | Frete entre estados |
-| Prestação de serviço de comunicação interno | 1.301 a 1.307 | Telefonia, dados, telecom |
-| Prestação de serviço de comunicação interestadual | 2.301 a 2.307 | Serviço de comunicação entre estados |
-| Retorno de bem enviado para reparo | 1.916 / 2.916 | Equipamento retorna da assistência |
-| Remessa para demonstração / mostruário / exposição | 1.912 / 2.912 | Material para feira ou apresentação |
-| Retorno de demonstração | 1.913 / 2.913 | Material retorna após demonstração |
-| Venda à ordem / operação triangular | 1.118 / 2.118 | Compra e entrega por conta e ordem |
-| Outras entradas correlatas | 1.949 / 2.949 | Quando não houver CFOP mais específico |
+## 9.3 Indústria — CFOPs mais usuais
+> Segmento de maior incidência de insumos, ativo, retorno de industrialização e remessas especiais.
 
-## 9.4 Regra prática de escolha
+| Operação no XML | CFOP mais comum na entrada | Faixa / variações usuais | Exemplo prático |
+|---|---:|---:|---|
+| Compra para industrialização dentro do estado | 1.101 | 1.101 | Matéria-prima |
+| Compra para industrialização interestadual | 2.101 | 2.101 | Insumo industrial vindo de outro estado |
+| Compra para revenda de item industrializado | 1.102 / 2.102 | 1.102 / 2.102 | Produto acabado comprado de terceiros |
+| Compra para uso ou consumo | 1.556 / 2.556 | 1.556 / 2.556 | Materiais de escritório ou limpeza |
+| Compra para ativo imobilizado | 1.551 / 2.551 | 1.551 / 2.551 | Máquina, equipamento, veículo |
+| Devolução de compra para industrialização | 1.202 / 2.202 | 1.202 / 2.202 | Insumo devolvido ao fornecedor |
+| Remessa para industrialização | 1.901 / 2.901 | 1.901 / 2.901 | Envio de insumo para terceiro industrializar |
+| Retorno de industrialização | 1.902 / 2.902 | 1.902 / 2.902 | Produto industrializado retorna |
+| Retorno de insumo não aplicado | 1.903 / 2.903 | 1.903 / 2.903 | Sobra de matéria-prima retorna |
+| Remessa para depósito / armazém geral | 1.905 / 2.905 | 1.905 / 2.905 | Envio para armazenagem |
+| Retorno de depósito | 1.906 / 2.906 | 1.906 / 2.906 | Mercadoria volta ao estabelecimento |
+| Remessa para conserto ou reparo | 1.915 / 2.915 | 1.915 / 2.915 | Equipamento para assistência técnica |
+| Retorno de conserto | 1.916 / 2.916 | 1.916 / 2.916 | Bem retorna após reparo |
+| Remessa em consignação | 1.917 / 2.917 | 1.917 / 2.917 | Envio para venda futura |
+| Retorno de consignação | 1.918 / 2.918 | 1.918 / 2.918 | Mercadoria não vendida retorna |
+| Remessa para demonstração | 1.912 / 2.912 | 1.912 / 2.912 | Material para feira ou teste |
+| Retorno de demonstração | 1.913 / 2.913 | 1.913 / 2.913 | Retorno após demonstração |
+| Importação para industrialização | 3.101 | 3.101 | Insumo importado |
+| Importação para revenda | 3.102 | 3.102 | Mercadoria importada para revenda |
+| Importação para ativo | 3.551 | 3.551 | Máquina importada |
+| Importação para uso/consumo | 3.556 | 3.556 | Material de consumo importado |
+| Exportação de produção própria | 7.101 | 7.101 | Produto industrializado exportado |
+| Exportação de mercadoria adquirida de terceiros | 7.102 | 7.102 | Revenda exportada |
+
+## 9.4 Prestação de serviços — CFOPs aplicáveis
+> **ISS puro não usa CFOP.** Para ISS, o correto é **código de serviço municipal / NFS-e**.  
+> Os CFOPs abaixo são aplicáveis sobretudo a **transporte**, **comunicação** e operações acessórias com repercussão no ICMS.
+
+| Operação no XML | CFOP mais comum na entrada | Faixa / variações usuais | Exemplo prático |
+|---|---:|---:|---|
+| Prestação de serviço de transporte interno | 1.351 a 1.359 | 1.351 a 1.359 | Frete rodoviário de carga dentro do estado |
+| Prestação de serviço de transporte interestadual | 2.351 a 2.359 | 2.351 a 2.359 | Frete entre estados |
+| Prestação de serviço de comunicação interno | 1.301 a 1.307 | 1.301 a 1.307 | Telefonia, dados, telecom |
+| Prestação de serviço de comunicação interestadual | 2.301 a 2.307 | 2.301 a 2.307 | Serviço de comunicação entre estados |
+| Tomada de serviço de transporte | conforme operação | validar CFOP do prestador | Frete contratado pelo destinatário |
+| Tomada de serviço de comunicação | conforme operação | validar CFOP do prestador | Serviço de telecom faturado ao tomador |
+| Retorno de bem enviado para reparo | 1.916 / 2.916 | 1.916 / 2.916 | Equipamento retorna da assistência |
+| Remessa para demonstração / mostruário / exposição | 1.912 / 2.912 | 1.912 / 2.912 | Material para feira ou apresentação |
+| Retorno de demonstração | 1.913 / 2.913 | 1.913 / 2.913 | Material retorna após demonstração |
+| Venda à ordem / operação triangular | 1.118 / 2.118 | 1.118 / 2.118 | Compra e entrega por conta e ordem |
+| Outras entradas correlatas | 1.949 / 2.949 | 1.949 / 2.949 | Quando não houver CFOP mais específico |
+
+## 9.5 Regra prática de escolha
 Para definir o CFOP da entrada, o agente deve:
 1. Identificar a **natureza da operação** no XML.
 2. Identificar o **segmento**: indústria, comércio ou serviços.
@@ -252,7 +283,7 @@ Para definir o CFOP da entrada, o agente deve:
    - transporte
    - comunicação
 
-## 9.5 Alertas de validação
+## 9.6 Alertas de validação
 O agente deve sempre confirmar:
 - CFOP do XML
 - CST / CSOSN

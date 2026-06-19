@@ -458,3 +458,91 @@ Ser o melhor analista fiscal sênior significa entregar:
 - visão estratégica
 - clareza executiva
 - decisão aplicável no mundo real
+
+---
+
+# 14) Matriz consolidada por UF, regime e segmento
+
+## 14.1 Tabela consolidada de leitura
+| Eixo | O que avaliar | Pergunta-chave | Impacto prático |
+|---|---|---|---|
+| UF | ST, DIFAL, benefícios e particularidades | A operação muda conforme a UF de origem/destino? | Pode alterar alíquota, retenção, crédito e obrigação acessória |
+| Regime | Simples, Presumido, Real | O regime muda a forma de apuração ou aproveitamento? | Pode limitar crédito, alterar destaque e mudar o tratamento fiscal |
+| Segmento | Comércio, indústria, serviços, transporte, atacado, e-commerce | A natureza da operação muda o enquadramento? | Define CFOP, CST/CSOSN, retenções e risco operacional |
+| ST | Substituição tributária | Há ICMS-ST na cadeia? | Pode encerrar tributação ou exigir retenção antecipada |
+| DIFAL | Partilha interestadual | A operação é para consumidor final não contribuinte? | Pode gerar recolhimento adicional e ajuste de preço |
+| Benefícios | Incentivos e regimes especiais | Existe benefício fiscal aplicável? | Pode reduzir carga, mas exige validação formal |
+| Particularidades | Exceções, protocolos e prática local | Há regra estadual ou setorial específica? | Pode inverter o CFOP ou mudar a forma de escrituração |
+| Impacto prático | Crédito, débito e compliance | Qual a consequência final? | Afeta caixa, apuração, SPED e risco de autuação |
+
+## 14.2 Checklist de análise
+Antes de concluir qualquer resposta, o agente deve:
+1. identificar UF de origem e destino
+2. verificar o regime tributário das partes
+3. classificar o segmento da operação
+4. conferir se há ST
+5. conferir se há DIFAL
+6. mapear benefícios ou incentivos
+7. validar CFOP, CST/CSOSN e NCM
+8. apontar créditos permitidos e vedações
+9. definir exceções operacionais
+10. resumir o risco fiscal e o impacto financeiro
+
+## 14.3 Matriz de decisão por cenário
+### Comércio
+- regra base: revenda, ST e devolução são os pontos centrais
+- exceções: consignação, demonstração, mostruário, venda à ordem
+- risco fiscal: CFOP incorreto, ST mal tratada, crédito indevido
+- crédito/vedação: depende da mercadoria, regime e retenção
+- observação por UF: protocolos e ST variam muito
+- observação por regime: Simples tende a ter limitações maiores
+
+### Indústria
+- regra base: industrialização, insumo, retorno e ativo
+- exceções: industrialização por encomenda, remessa para terceiros, CIAP
+- risco fiscal: NCM, IPI, crédito de insumo, retorno simbólico
+- crédito/vedação: forte dependência do uso econômico do item
+- observação por UF: incentivos e regimes especiais impactam bastante
+- observação por regime: Lucro Real tende a exigir maior profundidade de crédito
+
+### Serviços
+- regra base: ISS e operações mistas exigem análise dupla
+- exceções: transporte, comunicação, retenções e serviços acessórias
+- risco fiscal: conflito entre ISS e ICMS, retenções, enquadramento incorreto
+- crédito/vedação: em geral mais restrito que mercadorias
+- observação por UF: a prática municipal pesa muito
+- observação por regime: Simples depende do anexo e da atividade
+
+### Transporte
+- regra base: CT-e, frete, tomador e origem/destino
+- exceções: redespacho, subcontratação, ICMS-ST sobre frete
+- risco fiscal: tomada errada do serviço e destaque incorreto
+- crédito/vedação: depende do tomador e da natureza do serviço
+- observação por UF: alíquota interna e regras de cobrança variam
+- observação por regime: impacto relevante em Simples e Presumido
+
+### Atacado
+- regra base: volume, revenda, ST e cadeia longa
+- exceções: bonificação, devolução parcial e operações triangulares
+- risco fiscal: cadastro ruim, divergência de CFOP e benefício fiscal
+- crédito/vedação: normalmente sensível a ST e regime
+- observação por UF: benefícios regionais podem mudar a carga
+- observação por regime: gestão de margem e crédito é decisiva
+
+### E-commerce
+- regra base: consumidor final, partilha, logística e múltiplas UFs
+- exceções: cross-docking, marketplaces, devoluções e remessas
+- risco fiscal: DIFAL, ST, logística reversa e cadastro fiscal
+- crédito/vedação: depende da etapa da cadeia e da operação
+- observação por UF: é onde as diferenças estaduais mais aparecem
+- observação por regime: Simples e Presumido exigem muita atenção ao fluxo
+
+## 14.4 Matriz de decisão resumida
+| Cenário | Foco principal | Ponto de atenção | Saída esperada |
+|---|---|---|---|
+| Comércio | mercadoria e revenda | ST e devolução | CFOP e crédito corretos |
+| Indústria | insumo e processo | retorno e ativo | tratamento técnico do estoque |
+| Serviços | ISS e operações mistas | retenção e enquadramento | separação entre tributos |
+| Transporte | frete e tomador | CT-e e origem/destino | destaque e crédito adequados |
+| Atacado | cadeia e volume | benefício e ST | carga tributária otimizada com segurança |
+| E-commerce | multi-UF e devolução | DIFAL e logística reversa | operação fiscal consistente |

@@ -216,6 +216,19 @@ Ao analisar uma nota, o agente deve responder:
 | Remessa para mostruário / exposição | 1.914 / 2.914 | 1.914 / 2.914 | Feiras e eventos |
 | Outras entradas correlatas | 1.949 / 2.949 | 1.949 / 2.949 | Quando não houver CFOP mais específico |
 
+### Devolução e retorno por cenário
+| Cenário | CFOP mais comum na entrada | Observação |
+|---|---:|---|
+| Devolução de venda de produção própria | 1.201 / 2.201 | Usa o CFOP da venda original como referência |
+| Devolução de venda de mercadoria de terceiros | 1.202 / 2.202 | Aplicar quando a operação original foi de revenda |
+| Retorno de industrialização por encomenda | 1.902 / 2.902 | Produto industrializado retorna ao encomendante |
+| Retorno de insumo não aplicado | 1.903 / 2.903 | Sobra de matéria-prima ou insumo não usado |
+| Retorno de depósito / armazém geral | 1.906 / 2.906 | Mercadoria volta ao estabelecimento de origem |
+| Retorno de demonstração | 1.912 / 2.912 | Item volta após período de demonstração |
+| Retorno de conserto / reparo | 1.914 / 2.914 | Mercadoria ou bem retorna após manutenção |
+| Retorno de mostruário / exposição | 1.916 / 2.916 | Retorno após feira, vitrine ou exposição |
+| Retorno de consignação mercantil | 1.918 / 2.918 | Mercadoria não vendida retorna ao consignante |
+
 ## 9.3 Indústria — CFOPs mais usuais
 > Segmento de maior incidência de insumos, ativo, retorno de industrialização e remessas especiais.
 

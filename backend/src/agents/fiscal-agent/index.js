@@ -719,7 +719,7 @@ async function analyze({ cnpjs = [], user } = {}) {
   };
 }
 
-async function saveConversation({ userId, userMessage, assistantMessage, metadata = {} }) {
+async function saveConversation({ userId, userMessage, assistantMessage, metadata = {}, conversationType = 'chat' }) {
   if (!db.isConfigured) {
     return;
   }
@@ -727,9 +727,9 @@ async function saveConversation({ userId, userMessage, assistantMessage, metadat
   await db.query(
     `
     INSERT INTO agent_conversations (user_id, conversation_type, user_message, assistant_message, metadata)
-    VALUES ($1, 'chat', $2, $3, $4)
+    VALUES ($1, $5, $2, $3, $4)
     `,
-    [userId, userMessage, assistantMessage, JSON.stringify(metadata)]
+    [userId, userMessage, assistantMessage, JSON.stringify(metadata), conversationType]
   ).catch(() => null);
 }
 

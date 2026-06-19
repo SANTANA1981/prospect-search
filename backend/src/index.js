@@ -20,6 +20,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/search', require('./routes/search'));
 app.use('/api/dashboard', require('./routes/dashboard'));
 app.use('/api/agent', require('./routes/agent'));
+app.use('/api/whatsapp', require('./routes/whatsapp'));
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
